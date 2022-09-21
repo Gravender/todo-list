@@ -1,12 +1,10 @@
 :root {
     --font-color: #d7dadc;
-    --font-color-dark: #aaa;
     --background-footer: rgba(255, 0, 0, 0.63);
     --background-header: #1a1a1b;
     --background-task: #1c59b3;
-    --cream: #ece9ce;
-    --background: #a5b3d6;
-    --backgroun-contact: #af46af;
+    --task-color: white;
+    --completed-task-color: rgba(0, 0, 0, 0.2);
 }
 /* #region content */
 #content{
@@ -38,10 +36,28 @@ header{
     display:flex;
     flex-direction: column;
 }
+/* #region task Legend */
+.taskLegendParent{
+    flex: 1;
+    display:flex;
+    margin: 10px;
+    background-color: var(--task-color);
+    border-radius: 10px;
+}
+.taskLegend{
+    flex: 1;
+}
+/* #endregion */
 /* #region task */
 .task{
     flex: 1;
     display:flex;
+    margin: 10px;
+    background-color: var(--task-color);
+    border-radius: 10px;
+}
+.completed{
+    background-color: var(--completed-task-color);
 }
 /* #endregion */
 /* #endregion */
