@@ -1,5 +1,4 @@
 function loadFooter(){
-    const body = document.querySelector('body');
 
     const footer = document.createElement('footer');
     const para = document.createElement('p');
