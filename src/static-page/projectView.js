@@ -7,7 +7,7 @@ export function loadProjectView(){
     projectDiv.classList.add('projectDiv');
     
     
-    projects.forEach(element =>{
+    projects.list.forEach(element =>{
         projectDiv.appendChild(createProject(element));
     });
     return projectDiv;

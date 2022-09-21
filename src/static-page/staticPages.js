@@ -8,7 +8,7 @@ function renderStaticPages(content){
     let projects = restore();
     content.appendChild(loadHeader());
     content.appendChild(loadProjectView());
-    content.appendChild(loadTaskView(projects[0].tasks));
+    content.appendChild(loadTaskView(projects.locatebyProject(projects.currentProject).tasks));
     content.appendChild(loadFooter());
 }
 export default renderStaticPages;
