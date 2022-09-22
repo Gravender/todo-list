@@ -29,6 +29,7 @@ function createProject(project){
     });
     
     element.appendChild(title);
+    element.appendChild(deleteProjectBtn(project));
     return element;
 }
 function createLegend(){
@@ -48,6 +49,21 @@ function selectProject(project){
     projects_.setCurrentProject(project);
     const content = document.querySelector('#content');
     renderStaticPages(content);
+}
+function deleteProjectBtn(target){
+    const deleteProjectBtn = document.createElement('button');
+
+    deleteProjectBtn.innerText = "Delete";
+
+    deleteProjectBtn.classList.add('deleteProjectBtn');
+    deleteProjectBtn.addEventListener('click', () => {
+        let projects = restore();
+        projects.deleteProject(target);
+        const content = document.querySelector('#content');
+        renderStaticPages(content);
+    })
+
+    return deleteProjectBtn;
 }
 function addProjectBtn(){
     const element = document.createElement('div');

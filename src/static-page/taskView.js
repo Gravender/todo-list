@@ -186,7 +186,7 @@ function addTask(e){
     let description = document.getElementById("formTaskDescription");
     let dueDate = document.getElementById("formTaskDueDate");
     let priority = document.getElementById("formTaskPriority");
-    projects.insertTask(projects.currentProject, (new task(title.value, description.value, dueDate.value, Number(priority.value))));
+    projects.insertTask(new task(title.value, description.value, dueDate.value, Number(priority.value)));
     deleteForm();
     const content = document.querySelector('#content');
     renderStaticPages(content);

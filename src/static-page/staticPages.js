@@ -11,7 +11,15 @@ function renderStaticPages(content){
     }
     content.appendChild(loadHeader());
     content.appendChild(loadProjectView());
-    content.appendChild(loadTaskView(projects.locatebyProject(projects.currentProject).tasks));
+    let project = projects.locatebyProject(projects.currentProject);
+    let tasks;
+    if(project){
+        tasks = project.tasks;
+    }
+    else{
+        tasks = [];
+    }
+    content.appendChild(loadTaskView(tasks));
     content.appendChild(loadFooter());
 }
 export default renderStaticPages;

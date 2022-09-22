@@ -33,9 +33,9 @@ function defaultProject() {
     return project;
 }
 function importProject(title, tasks){
-    let temp = []
+    let temp = [];
     tasks.forEach(element =>{
-        temp.push(importTasks(element))
+        temp.push(importTasks(element));
     });
     return new Project(title, temp);
 }

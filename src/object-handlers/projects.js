@@ -1,3 +1,4 @@
+import { add } from "lodash";
 import { createData } from "./storage";
 
 class Project {
@@ -14,6 +15,9 @@ class Project {
     locateTask(target){
         return this.tasks.findIndex(x => x.isEqual(target));
     }
+    isEqual(target){
+        return this.title == target.title;
+    }
 }
 class Projects{
     constructor(list = [], currentProject= 'default'){
@@ -28,8 +32,16 @@ class Projects{
         this.list.push(new Project(title));
         createData(this);
     }
-    insertTask(target, task){
-        this.locatebyProject(target).addTask(task);
+    insertTask(task, target =this.currentProject){
+        let project = this.locatebyProject(target);
+        if(!project){
+            project = this.locatebyProject('default');
+            if(!project){
+                this.addProject('default');
+                project = this.locatebyProject('default');
+            }
+        }
+        project.addTask(task);
         createData(this);
     }
     locatebyTask(target){
@@ -40,6 +52,10 @@ class Projects{
     }
     deleteTask(target){
         this.locatebyTask(target).deleteTask(target);
+        createData(this);
+    }
+    deleteProject(target){
+        this.list.splice(this.list.findIndex(x => x.isEqual(target)), 1);
         createData(this);
     }
 }
