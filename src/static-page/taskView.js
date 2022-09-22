@@ -46,22 +46,18 @@ function createLegend() {
 }
 function createTask(task) {
     const element = document.createElement('div');
+    const mainTaskDiv = document.createElement('div');
     const title = document.createElement('h3');
-    const description = document.createElement('p');
     const dueDate = document.createElement('span');
-    const priority = document.createElement('span');
     const completed = document.createElement('input');
 
     title.innerText = task.title;
-    description.innerText = task.description;
     dueDate.innerText = task.dueDate;
-    priority.innerText = task.priority;
 
     element.classList.add('task');
+    mainTaskDiv.classList.add('mainTaskDiv');
     title.classList.add('taskTitle');
-    description.classList.add('taskDescription');
     dueDate.classList.add('taskDueDate');
-    priority.classList.add('taskPriority');
     completed.classList.add('taskCompleted');
 
     completed.setAttribute('type', 'checkbox');
@@ -77,17 +73,83 @@ function createTask(task) {
         else {
             element.classList.add('completed');
         }
-        task.completed = !task.completed;
-
-    })
-    element.appendChild(completed);
-    element.appendChild(title);
-    element.appendChild(description);
-    element.appendChild(dueDate);
-    element.appendChild(priority);
-    element.appendChild(deleteTaskBtn(task));
-
+        let projects = restore();
+        projects.updateTask(task, 'completed', !task.completed);
+        const content = document.querySelector('#content');
+        renderStaticPages(content);
+    });
+    mainTaskDiv.addEventListener('click', ()=>{
+        let projects = restore();
+        let selector = `expandedTaskDiv${projects.locateTask(task)}`;
+        let expandedTaskDiv = document.getElementById(selector);
+        console.log(selector);
+        console.log(expandedTaskDiv);
+        if(!expandedTaskDiv){
+            console.log(task);
+            const expandedTaskDivs = document.querySelectorAll('.expandedTaskDiv');
+            expandedTaskDivs.forEach(expandedTask => {
+                saveExpandedNotes();
+                expandedTask.remove();
+            });
+            element.appendChild(expandTask(task));
+        }
+        else{
+            saveExpandedNotes();
+            expandedTaskDiv.remove();
+            const content = document.querySelector('#content');
+            renderStaticPages(content);
+        }
+    });
+    mainTaskDiv.appendChild(completed);
+    mainTaskDiv.appendChild(title);
+    mainTaskDiv.appendChild(dueDate);
+    mainTaskDiv.appendChild(deleteTaskBtn(task));
+    element.appendChild(mainTaskDiv);
     return element;
+}
+function expandTask(target){
+    console.log(target);
+    const element = document.createElement('div');
+    const description = document.createElement('p')
+    const notes = document.createElement('p');
+    const priority = document.createElement('span');
+    
+    description.innerText = target.description;
+    notes.innerText = target.notes;
+    priority.innerText = target.priority;
+    
+    element.classList.add('expandedTaskDiv')
+    description.classList.add('expandedTaskDescription');
+    notes.classList.add('expandedTaskNotes');
+    priority.classList.add('expandedTaskPriority');
+    
+    notes.addEventListener('click', () => {
+      // Toggle contentEditable on button click
+      notes.setAttribute('contenteditable', 'true');
+    });
+    let projects = restore();
+    let selector = `expandedTaskDiv${projects.locateTask(target)}`;
+    element.setAttribute('id', selector);
+    if(!projects.locatebyTask(target)){renderStaticPages(content);}
+    else{
+        notes.setAttribute('data-projecttitle', projects.locatebyTask(target).title);
+        notes.setAttribute('data-taskindex', projects.locateTask(target));
+    }
+    notes.setAttribute('id', `expandedTaskNotes`);
+    
+    element.appendChild(description);
+    element.appendChild(notes);
+    element.appendChild(priority);
+    
+    
+    return element;
+}
+function saveExpandedNotes(){
+    let projects = restore();
+    let notes = document.getElementById(`expandedTaskNotes`);
+    let projectTitle = notes.dataset.projecttitle;
+    let taskIndex = notes.dataset.taskindex;
+    projects.updateTask(projects.locatebyProject(projectTitle).tasks[taskIndex], 'notes', notes.innerText);
 }
 function deleteTaskBtn(target){
     const deleteTaskBtn = document.createElement('button');
