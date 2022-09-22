@@ -10,7 +10,6 @@ function restore() {
     if (!localStorage.projects) {
         let projects = new Projects();
         projects.list.push(defaultProject());
-        projects.currentProject = 'default'
         createData(projects);
         return projects;
     }
@@ -21,6 +20,7 @@ function restore() {
         currentProject.list.forEach(element => {
             projects_.list.push(importProject(element.title, element.tasks));
         });
+        projects_.currentProject =currentProject.currentProject;
         return projects_;
     }
 }

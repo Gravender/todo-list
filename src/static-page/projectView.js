@@ -24,6 +24,10 @@ function createProject(project){
     element.classList.add('project');
     title.classList.add('projectTitle');
     
+    title.addEventListener('click', ()=>{
+        selectProject(project.title);
+    });
+    
     element.appendChild(title);
     return element;
 }
@@ -38,6 +42,12 @@ function createLegend(){
     element.appendChild(title);
     
     return element;
+}
+function selectProject(project){
+    let projects_ = restore();
+    projects_.setCurrentProject(project);
+    const content = document.querySelector('#content');
+    renderStaticPages(content);
 }
 function addProjectBtn(){
     const element = document.createElement('div');
