@@ -1,5 +1,5 @@
-class task{
-        constructor(title, description, dueDate, priority, notes = '', completed = false){
+class task {
+        constructor(title, description, dueDate, priority, notes = '', completed = false) {
                 this.title = title;
                 this.description = description;
                 this.dueDate = dueDate;
@@ -7,5 +7,13 @@ class task{
                 this.notes = notes;
                 this.completed = completed;
         }
+        isEqual(comparator) {
+                return this.title == comparator.title &&
+                        this.description == comparator.description &&
+                        this.dueDate == comparator.dueDate &&
+                        this.priority == comparator.priority &&
+                        this.notes == comparator.notes &&
+                        this.completed == comparator.completed;
+        }
 }
-export {task}
+export { task }

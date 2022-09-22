@@ -80,14 +80,29 @@ function createTask(task) {
         task.completed = !task.completed;
 
     })
-
+    element.appendChild(completed);
     element.appendChild(title);
     element.appendChild(description);
     element.appendChild(dueDate);
     element.appendChild(priority);
-    element.appendChild(completed);
+    element.appendChild(deleteTaskBtn(task));
 
     return element;
+}
+function deleteTaskBtn(target){
+    const deleteTaskBtn = document.createElement('button');
+
+    deleteTaskBtn.innerText = "Delete";
+
+    deleteTaskBtn.classList.add('deleteTaskBtn');
+    deleteTaskBtn.addEventListener('click', () => {
+        let projects = restore();
+        projects.deleteTask(target);
+        const content = document.querySelector('#content');
+        renderStaticPages(content);
+    })
+
+    return deleteTaskBtn;
 }
 function addTaskBtn() {
     const element = document.createElement('div');

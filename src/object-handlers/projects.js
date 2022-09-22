@@ -9,10 +9,10 @@ class Project {
         this.tasks.push(task);
     };
     deleteTask(target){
-        this.tasks.splice(this.locateTask(target));
+        this.tasks.splice(this.locateTask(target), 1);
     }
     locateTask(target){
-        return this.tasks.index(target);
+        return this.tasks.findIndex(x => x.isEqual(target));
     }
 }
 class Projects{
@@ -33,7 +33,7 @@ class Projects{
         createData(this);
     }
     locatebyTask(target){
-         return this.list.find((project) => project.find((task) => task == target));
+         return this.list.find((project) => project.tasks.find((task) => task.isEqual(target)));
     }
     locatebyProject(target){
         return this.list.find((project)=> project.title == target);
