@@ -1,6 +1,7 @@
 import { loadTaskView } from "./taskView";
 import { restore } from '../object-handlers/storage';
 import setAttributes from "../helper-functions/setAttributes";
+import renderStaticPages from "./staticPages";
 export function loadProjectView(){
     let projects = restore();
     const projectDiv = document.createElement('div');
@@ -73,6 +74,10 @@ function addProjectForm() {
     
     form.onsubmit = addProject;
     
+    element.classList.add('projectFormDiv');
+    element.setAttribute('id', 'projectFormDiv');
+    form.classList.add('projectForm');
+    
     form.appendChild(legend);
     form.appendChild(title);
     form.appendChild(button);
@@ -86,5 +91,14 @@ function addProject(e){
     
     let title = document.getElementById("formProjectTitle");
     projects.addProject(title.value);
-    
+    deleteForm();
+    const content = document.querySelector('#content');
+    renderStaticPages(content);
+}
+function deleteForm(){
+    const element = document.getElementById('projectFormDiv');
+    while(element.firstChild){
+        element.removeChild(element.lastChild);
+    }
+    element.remove();
 }

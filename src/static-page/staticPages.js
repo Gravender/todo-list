@@ -6,6 +6,9 @@ import loadFooter from './footer';
 import loadHeader from './header';
 function renderStaticPages(content){
     let projects = restore();
+    while (content.firstChild) {
+        content.removeChild(content.lastChild);
+    }
     content.appendChild(loadHeader());
     content.appendChild(loadProjectView());
     content.appendChild(loadTaskView(projects.locatebyProject(projects.currentProject).tasks));

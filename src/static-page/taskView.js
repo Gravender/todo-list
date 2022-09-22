@@ -2,6 +2,7 @@ import setAttributes from "../helper-functions/setAttributes";
 import { task } from "../object-handlers/task";
 import { format } from 'date-fns';
 import { restore } from "../object-handlers/storage";
+import renderStaticPages from "./staticPages";
 export function loadTaskView(tasks) {
     const body = document.querySelector('body');
 
@@ -142,15 +143,25 @@ function addTaskForm() {
     
     form.onsubmit = addTask;
     
+    element.classList.add('taskFormDiv');
+    element.setAttribute('id', 'taskFormDiv');
+    form.classList.add('taskForm');
+    
     form.appendChild(legend);
-    form.appendChild(title);
-    form.appendChild(description);
-    form.appendChild(dueDate);
-    form.appendChild(priority);
+    form.appendChild(createFormItemDiv(title));
+    form.appendChild(createFormItemDiv(description));
+    form.appendChild(createFormItemDiv(dueDate));
+    form.appendChild(createFormItemDiv(priority));
     form.appendChild(button);
     element.appendChild(form);
     document.body.appendChild(element);
     
+}
+function createFormItemDiv(target){
+    const element = document.createElement('div');
+    element.classList.add('taskFormItem');
+    element.appendChild(target);
+    return element;
 }
 function addTask(e){
     e.preventDefault();
@@ -161,5 +172,14 @@ function addTask(e){
     let dueDate = document.getElementById("formTaskDueDate");
     let priority = document.getElementById("formTaskPriority");
     projects.insertTask(projects.currentProject, (new task(title.value, description.value, dueDate.value, Number(priority.value))));
-    
+    deleteForm();
+    const content = document.querySelector('#content');
+    renderStaticPages(content);
+}
+function deleteForm(){
+    const element = document.getElementById('taskFormDiv');
+    while(element.firstChild){
+        element.removeChild(element.lastChild);
+    }
+    element.remove();
 }
