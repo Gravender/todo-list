@@ -16,6 +16,7 @@ class Projects{
     }
     addProject(title){
         this.list.push(new Project(title));
+        createData(this);
     }
     insertTask(target, task){
         this.locatebyProject(target).addTask(task);

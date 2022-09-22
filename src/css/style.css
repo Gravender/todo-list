@@ -53,11 +53,12 @@ header{
     flex: 1;
     display:flex;
     margin: 10px;
-    background-color: var(--task-color);
     border-radius: 10px;
+    border: var(--task-color) 1px solid;
 }
 .completed{
     background-color: var(--completed-task-color);
+    text-decoration: line-through;
 }
 /* #endregion */
 /* #endregion */
