@@ -40,6 +40,6 @@ function importProject(title, tasks){
     return new Project(title, temp);
 }
 function importTasks(task_){
-    return (new task(task_.title,task_.description,task_.dueDate, task_.priority, task_.notes, task_.completed));
+    return (new task(task_.title,task_.description,task_.dueDate, task_.priority, task_.notes, task_.completed, task_.isExpanded));
 }
 export{ restore, createData};

@@ -19,6 +19,7 @@ class Project {
         if (property == 'priority') { this.tasks[this.locateTask(target)].priority = value };
         if (property == 'notes') { this.tasks[this.locateTask(target)].notes = value };
         if (property == 'completed') { this.tasks[this.locateTask(target)].completed = value };
+        if (property == 'isExpanded') { this.tasks[this.locateTask(target)].isExpanded = value };
     }
     locateTask(target) {
         return this.tasks.findIndex(x => x.isEqual(target));

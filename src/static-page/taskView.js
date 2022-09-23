@@ -74,41 +74,33 @@ function createTask(task) {
             element.classList.add('completed');
         }
         let projects = restore();
-        projects.updateTask(task, 'completed', !task.completed);
+        projects.updateTask(task, 'completed', );
         const content = document.querySelector('#content');
         renderStaticPages(content);
     });
     mainTaskDiv.addEventListener('click', ()=>{
+        let expandedTaskDiv = document.querySelector('#expandedTaskDiv');
         let projects = restore();
-        let selector = `expandedTaskDiv${projects.locateTask(task)}`;
-        let expandedTaskDiv = document.getElementById(selector);
-        console.log(selector);
-        console.log(expandedTaskDiv);
-        if(!expandedTaskDiv){
-            console.log(task);
-            const expandedTaskDivs = document.querySelectorAll('.expandedTaskDiv');
-            expandedTaskDivs.forEach(expandedTask => {
-                saveExpandedNotes();
-                expandedTask.remove();
-            });
-            element.appendChild(expandTask(task));
+        projects.updateTask(task, 'isExpanded', true);
+        if(expandedTaskDiv){
+            saveExpandedNotes();
         }
         else{
-            saveExpandedNotes();
-            expandedTaskDiv.remove();
-            const content = document.querySelector('#content');
-            renderStaticPages(content);
         }
+        const content = document.querySelector('#content');
+        renderStaticPages(content);
     });
     mainTaskDiv.appendChild(completed);
     mainTaskDiv.appendChild(title);
     mainTaskDiv.appendChild(dueDate);
     mainTaskDiv.appendChild(deleteTaskBtn(task));
     element.appendChild(mainTaskDiv);
+    if(task.isExpanded == true){
+        element.appendChild(expandTask(task));
+    }
     return element;
 }
 function expandTask(target){
-    console.log(target);
     const element = document.createElement('div');
     const description = document.createElement('p')
     const notes = document.createElement('p');
@@ -123,13 +115,12 @@ function expandTask(target){
     notes.classList.add('expandedTaskNotes');
     priority.classList.add('expandedTaskPriority');
     
+    element.setAttribute('id', 'expandedTaskDiv');
     notes.addEventListener('click', () => {
       // Toggle contentEditable on button click
       notes.setAttribute('contenteditable', 'true');
     });
     let projects = restore();
-    let selector = `expandedTaskDiv${projects.locateTask(target)}`;
-    element.setAttribute('id', selector);
     if(!projects.locatebyTask(target)){renderStaticPages(content);}
     else{
         notes.setAttribute('data-projecttitle', projects.locatebyTask(target).title);
@@ -149,7 +140,9 @@ function saveExpandedNotes(){
     let notes = document.getElementById(`expandedTaskNotes`);
     let projectTitle = notes.dataset.projecttitle;
     let taskIndex = notes.dataset.taskindex;
-    projects.updateTask(projects.locatebyProject(projectTitle).tasks[taskIndex], 'notes', notes.innerText);
+    let task = projects.locatebyProject(projectTitle).tasks[taskIndex];
+    projects.updateTask(task, 'notes', notes.innerText);
+    projects.updateTask(task, 'isExpanded', !task.isExpanded);
 }
 function deleteTaskBtn(target){
     const deleteTaskBtn = document.createElement('button');
