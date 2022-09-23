@@ -46,6 +46,14 @@ function createLegend(){
 }
 function selectProject(project){
     let projects_ = restore();
+    let currentProject_ = projects_.locatebyProject(projects_.currentProject);
+    currentProject_.tasks.forEach(task =>{
+        if(task.isExpanded){
+            let notes = document.getElementById(`expandedTaskNotes`);
+            currentProject_.updateTask(task, 'notes', notes.innerText);
+            currentProject_.updateTask(task, 'isExpanded', false);
+        }
+    });
     projects_.setCurrentProject(project);
     const content = document.querySelector('#content');
     renderStaticPages(content);

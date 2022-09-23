@@ -82,14 +82,14 @@ function createTask(task) {
         const content = document.querySelector('#content');
         renderStaticPages(content);
     });
-    taskDiv.addEventListener('click', ()=>{
+    taskDiv.addEventListener('click', () => {
         let expandedTaskDiv = document.querySelector('#expandedTaskDiv');
         let projects = restore();
         projects.updateTask(task, 'isExpanded', true);
-        if(expandedTaskDiv){
+        if (expandedTaskDiv) {
             saveExpandedNotes();
         }
-        else{
+        else {
         }
         const content = document.querySelector('#content');
         renderStaticPages(content);
@@ -101,47 +101,47 @@ function createTask(task) {
     mainTaskDiv.appendChild(checkDiv);
     mainTaskDiv.appendChild(taskDiv);
     element.appendChild(mainTaskDiv);
-    if(task.isExpanded == true){
+    if (task.isExpanded == true) {
         element.appendChild(expandTask(task));
     }
     return element;
 }
-function expandTask(target){
+function expandTask(target) {
     const element = document.createElement('div');
     const description = document.createElement('p')
     const notes = document.createElement('p');
     const priority = document.createElement('span');
-    
+
     description.innerText = target.description;
     notes.innerText = target.notes;
     priority.innerText = target.priority;
-    
+
     element.classList.add('expandedTaskDiv')
     description.classList.add('expandedTaskDescription');
     notes.classList.add('expandedTaskNotes');
     priority.classList.add('expandedTaskPriority');
-    
+
     element.setAttribute('id', 'expandedTaskDiv');
     notes.addEventListener('click', () => {
-      // Toggle contentEditable on button click
-      notes.setAttribute('contenteditable', 'true');
+        // Toggle contentEditable on button click
+        notes.setAttribute('contenteditable', 'true');
     });
     let projects = restore();
-    if(!projects.locatebyTask(target)){renderStaticPages(content);}
-    else{
+    if (!projects.locatebyTask(target)) { renderStaticPages(content); }
+    else {
         notes.setAttribute('data-projecttitle', projects.locatebyTask(target).title);
         notes.setAttribute('data-taskindex', projects.locateTask(target));
     }
     notes.setAttribute('id', `expandedTaskNotes`);
-    
+
     element.appendChild(description);
     element.appendChild(notes);
     element.appendChild(priority);
-    
-    
+
+
     return element;
 }
-function saveExpandedNotes(){
+function saveExpandedNotes() {
     let projects = restore();
     let notes = document.getElementById(`expandedTaskNotes`);
     let projectTitle = notes.dataset.projecttitle;
@@ -150,7 +150,7 @@ function saveExpandedNotes(){
     projects.updateTask(task, 'notes', notes.innerText);
     projects.updateTask(task, 'isExpanded', !task.isExpanded);
 }
-function deleteTaskBtn(target){
+function deleteTaskBtn(target) {
     const deleteTaskBtn = document.createElement('button');
 
     deleteTaskBtn.innerText = "Delete";
@@ -160,7 +160,7 @@ function deleteTaskBtn(target){
         let projects = restore();
         projects.deleteTask(target);
         const content = document.querySelector('#content');
-        while(content.firstChild){
+        while (content.firstChild) {
             content.removeChild(content.lastChild);
         }
         renderStaticPages(content);
@@ -192,8 +192,8 @@ function addTaskForm() {
     const dueDate = document.createElement('input');
     const priority = document.createElement('input');
     const button = document.createElement('button');
-    
-    legend.innerText ="Add a Task:";
+
+    legend.innerText = "Add a Task:";
     button.innerText = "submit";
 
     setAttributes(title, {
@@ -216,16 +216,18 @@ function addTaskForm() {
     setAttributes(priority, {
         'id': 'formTaskPriority',
         'type': 'number',
-        'required': 'true'
+        'required': 'true',
+        'min': '1',
+        'max': '5'
     });
     button.setAttribute('type', 'submit');
-    
+
     form.onsubmit = addTask;
-    
+
     element.classList.add('taskFormDiv');
     element.setAttribute('id', 'taskFormDiv');
     form.classList.add('taskForm');
-    
+
     form.appendChild(legend);
     form.appendChild(createFormItemDiv(title));
     form.appendChild(createFormItemDiv(description));
@@ -234,18 +236,18 @@ function addTaskForm() {
     form.appendChild(button);
     element.appendChild(form);
     document.body.appendChild(element);
-    
+
 }
-function createFormItemDiv(target){
+function createFormItemDiv(target) {
     const element = document.createElement('div');
     element.classList.add('taskFormItem');
     element.appendChild(target);
     return element;
 }
-function addTask(e){
+function addTask(e) {
     e.preventDefault();
     let projects = restore();
-    
+
     let title = document.getElementById("formTaskTitle");
     let description = document.getElementById("formTaskDescription");
     let dueDate = document.getElementById("formTaskDueDate");
@@ -255,9 +257,9 @@ function addTask(e){
     const content = document.querySelector('#content');
     renderStaticPages(content);
 }
-function deleteForm(){
+function deleteForm() {
     const element = document.getElementById('taskFormDiv');
-    while(element.firstChild){
+    while (element.firstChild) {
         element.removeChild(element.lastChild);
     }
     element.remove();
