@@ -74,7 +74,8 @@ class Projects {
         return -1;
     }
     updateTask(target, property, value) {
-        this.locatebyTask(target).updateTask(target, property, value);
+        let project = this.locatebyTask(target)
+        if(project != -1 && project != undefined){project.updateTask(target, property, value)};
         createData(this);
     }
 }

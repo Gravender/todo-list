@@ -69,7 +69,13 @@ header {
     flex: 1;
     display: flex;
 }
-
+.checkDiv{
+    width: 10%;
+    justify-content: center;
+    align-items: center;
+}.taskDiv{
+    width: 90%;
+}
 .completed {
     background-color: var(--completed-task-color);
     text-decoration: line-through;

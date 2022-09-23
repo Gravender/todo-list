@@ -47,6 +47,8 @@ function createLegend() {
 function createTask(task) {
     const element = document.createElement('div');
     const mainTaskDiv = document.createElement('div');
+    const checkDiv = document.createElement('div');
+    const taskDiv = document.createElement('div');
     const title = document.createElement('h3');
     const dueDate = document.createElement('span');
     const completed = document.createElement('input');
@@ -56,6 +58,8 @@ function createTask(task) {
 
     element.classList.add('task');
     mainTaskDiv.classList.add('mainTaskDiv');
+    checkDiv.classList.add('checkDiv');
+    taskDiv.classList.add('taskDiv');
     title.classList.add('taskTitle');
     dueDate.classList.add('taskDueDate');
     completed.classList.add('taskCompleted');
@@ -74,11 +78,11 @@ function createTask(task) {
             element.classList.add('completed');
         }
         let projects = restore();
-        projects.updateTask(task, 'completed', );
+        projects.updateTask(task, 'completed', !task.completed);
         const content = document.querySelector('#content');
         renderStaticPages(content);
     });
-    mainTaskDiv.addEventListener('click', ()=>{
+    taskDiv.addEventListener('click', ()=>{
         let expandedTaskDiv = document.querySelector('#expandedTaskDiv');
         let projects = restore();
         projects.updateTask(task, 'isExpanded', true);
@@ -90,10 +94,12 @@ function createTask(task) {
         const content = document.querySelector('#content');
         renderStaticPages(content);
     });
-    mainTaskDiv.appendChild(completed);
-    mainTaskDiv.appendChild(title);
-    mainTaskDiv.appendChild(dueDate);
-    mainTaskDiv.appendChild(deleteTaskBtn(task));
+    checkDiv.appendChild(completed);
+    taskDiv.appendChild(title);
+    taskDiv.appendChild(dueDate);
+    taskDiv.appendChild(deleteTaskBtn(task));
+    mainTaskDiv.appendChild(checkDiv);
+    mainTaskDiv.appendChild(taskDiv);
     element.appendChild(mainTaskDiv);
     if(task.isExpanded == true){
         element.appendChild(expandTask(task));
@@ -154,6 +160,9 @@ function deleteTaskBtn(target){
         let projects = restore();
         projects.deleteTask(target);
         const content = document.querySelector('#content');
+        while(content.firstChild){
+            content.removeChild(content.lastChild);
+        }
         renderStaticPages(content);
     })
 
