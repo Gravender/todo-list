@@ -97,7 +97,7 @@ function createTask(task) {
         renderStaticPages(content);
     });
     element.classList.add(`taskPriority${task.priority}`);
-    
+
     checkDiv.appendChild(completed);
     taskInfoDiv.appendChild(title);
     taskInfoDiv.appendChild(dueDate);
@@ -184,7 +184,8 @@ function addTaskBtn() {
     addTaskBtn.addEventListener('click', () => {
         addTaskForm();
     })
-
+    element.classList.add('task');
+    element.classList.add('taskBtn');
     element.appendChild(addTaskBtn);
 
     return element;
@@ -213,10 +214,10 @@ function addTaskForm() {
     const dueDate = document.createElement('input');
     const priority = document.createElement('input');
     const button = document.createElement('button');
-
+    const close = document.createElement('button');
     legend.innerText = "Add a Task:";
     button.innerText = "submit";
-
+    close.innerText = "close";
     setAttributes(title, {
         'id': 'formTaskTitle',
         'type': 'text',
@@ -244,7 +245,9 @@ function addTaskForm() {
     button.setAttribute('type', 'submit');
 
     form.onsubmit = addTask;
-
+    close.addEventListener('click', () => {
+        deleteForm();
+    });
     element.classList.add('taskFormDiv');
     element.setAttribute('id', 'taskFormDiv');
     form.classList.add('taskForm');
@@ -255,6 +258,7 @@ function addTaskForm() {
     form.appendChild(createFormItemDiv(dueDate));
     form.appendChild(createFormItemDiv(priority));
     form.appendChild(button);
+    form.appendChild(close);
     element.appendChild(form);
     document.body.appendChild(element);
 
@@ -268,14 +272,14 @@ function editTaskForm(task) {
     const dueDate = document.createElement('input');
     const priority = document.createElement('input');
     const button = document.createElement('button');
-
+    const close = document.createElement('button');
     legend.innerText = `Edit: ${task.title}`;
     title.value = task.title;
     description.value = task.description;
     dueDate.value = task.dueDate;
     priority.value = task.priority;
     button.innerText = "submit";
-
+    close.innerText = "close";
     setAttributes(title, {
         'id': 'formTaskTitle',
         'type': 'text',
@@ -301,6 +305,9 @@ function editTaskForm(task) {
     button.setAttribute('type', 'submit');
 
     form.onsubmit = updateTask;
+    close.addEventListener('click', () => {
+        deleteForm();
+    });
     let projects = restore();
     element.setAttribute('data-projecttitle', projects.locatebyTask(task).title);
     element.setAttribute('data-taskindex', projects.locateTask(task));
@@ -314,6 +321,7 @@ function editTaskForm(task) {
     form.appendChild(createFormItemDiv(dueDate));
     form.appendChild(createFormItemDiv(priority));
     form.appendChild(button);
+    form.appendChild(close);
     element.appendChild(form);
     document.body.appendChild(element);
 

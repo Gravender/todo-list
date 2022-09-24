@@ -4,6 +4,7 @@
     --background-header: #1a1a1b;
     --background-projects: #edcec5;
     --background-task: #ce916d;
+    --background-task-div:#7d95ad;
     --background-form-div: rgba(41, 50, 58, 0.8);
     --background-form: #607385;
     --task-color: white;
@@ -12,7 +13,7 @@
     --task-priority-3: #214c89;
     --task-priority-4: #213c69;
     --task-priority-5: #212c49;
-    --completed-task-color: rgba(0, 0, 0, 0.2);
+    --completed-task-color: rgba(25, 49, 73, 0.80);
 }
 
 /* #region content */
@@ -66,9 +67,10 @@ header {
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 5px;
     border-radius: 10px;
     border: var(--task-color) 2px solid;
+    background-color: var(--background-task-div);
     padding:10px;
 }
 
@@ -147,6 +149,7 @@ header {
     background-color: var(--background-form);
     border-radius: 10px;
     margin-top: 30%;
+    padding: 10px;
 }
 
 .taskFormItem {
@@ -162,6 +165,30 @@ header {
     background-color: var(--background-projects);
     border-radius: 10px;
     padding:10px;
+}
+.projectFormDiv {
+    display: flex;
+    position: fixed;
+    /* Stay in place */
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Sit on top */
+    text-align: center;
+    justify-content: center;
+    background-color: var(--background-form-div);
+}
+
+.projectForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 400px;
+    background-color: var(--background-form);
+    border-radius: 10px;
+    margin-top: 30%;
+    padding: 10px;
 }
 /* #endregion */
 /* #region footer */
