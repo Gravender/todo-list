@@ -2,10 +2,16 @@
     --font-color: #d7dadc;
     --background-footer: rgba(255, 0, 0, 0.63);
     --background-header: #1a1a1b;
-    --background-task: #1c59b3;
+    --background-projects: #edcec5;
+    --background-task: #ce916d;
     --background-form-div: rgba(41, 50, 58, 0.8);
     --background-form: #607385;
     --task-color: white;
+    --task-priority-1: #216cd9;
+    --task-priority-2: #215ca9;
+    --task-priority-3: #214c89;
+    --task-priority-4: #213c69;
+    --task-priority-5: #212c49;
     --completed-task-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -62,19 +68,39 @@ header {
     flex-direction: column;
     margin: 10px;
     border-radius: 10px;
-    border: var(--task-color) 1px solid;
+    border: var(--task-color) 2px solid;
+    padding:10px;
 }
 
 .mainTaskDiv {
     flex: 1;
     display: flex;
 }
+.taskPriority1{
+    background-color: var(--task-priority-1);
+}
+.taskPriority2{
+    background-color: var(--task-priority-2);
+}
+.taskPriority3{
+    background-color: var(--task-priority-3);
+}
+.taskPriority4{
+    background-color: var(--task-priority-4);
+}
+.taskPriority5{
+    background-color: var(--task-priority-5);
+}
 .checkDiv{
-    width: 10%;
+    width: 5%;
     justify-content: center;
     align-items: center;
-}.taskDiv{
-    width: 90%;
+}
+.taskDiv{
+    width: 80%;
+}
+.taskButtondiv{
+    width: 15%;
 }
 .completed {
     background-color: var(--completed-task-color);
@@ -129,6 +155,14 @@ header {
 }
 
 /* #endregion */
+/* #endregion */
+/* #region projects */
+.projectDiv{
+    grid-area: projects;
+    background-color: var(--background-projects);
+    border-radius: 10px;
+    padding:10px;
+}
 /* #endregion */
 /* #region footer */
 footer {
