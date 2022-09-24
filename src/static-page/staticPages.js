@@ -14,7 +14,21 @@ function renderStaticPages(content){
     let project = projects.locatebyProject(projects.currentProject);
     let tasks;
     if(project){
-        tasks = project.tasks;
+        tasks = project.tasks.sort((task1, task2)=>{
+            if(task1.dueDate > task2.dueDate){
+                return 1;
+            }else if(task1.dueDate < task2.dueDate){
+                return -1;
+            }
+            if(task1.priority < task2.priority){
+                return 1;
+            }else if (task1.priority > task2.priority){
+                return -1;
+            }
+            else{
+                return 0;
+            }
+        });
     }
     else{
         tasks = [];
