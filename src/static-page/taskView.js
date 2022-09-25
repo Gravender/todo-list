@@ -71,6 +71,9 @@ function createTask(task) {
         completed.setAttribute('checked', '');
         element.classList.add('completed');
     }
+    if(task.isExpanded){
+        element.classList.add('expanded');
+    }
 
     completed.addEventListener('change', () => {
         if (task.completed) {
@@ -142,7 +145,7 @@ function expandTask(target) {
 
     element.appendChild(description);
     element.appendChild(notes);
-    element.appendChild(priority);
+    //element.appendChild(priority);
 
 
     return element;
@@ -191,7 +194,6 @@ function addTaskBtn() {
     return element;
 }
 function editTaskBtn(task) {
-    const element = document.createElement('div');
     const addTaskBtn = document.createElement('button');
 
     addTaskBtn.innerText = "edit";
@@ -201,9 +203,8 @@ function editTaskBtn(task) {
         editTaskForm(task);
     })
 
-    element.appendChild(addTaskBtn);
 
-    return element;
+    return addTaskBtn;
 }
 function addTaskForm() {
     const element = document.createElement('div');
