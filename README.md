@@ -1,5 +1,6 @@
 A basic Todo list made using webpack
 
+The tasks are sorted first by due date then by priority
 
 [The Odin Project - Javascript Course](https://www.theodinproject.com/courses/javascript)
 
